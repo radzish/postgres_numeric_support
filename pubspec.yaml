@@ -1,0 +1,13 @@
+name: postgres_numeric_support
+description: Utility functions to convert from / to postgres numeric type
+author: Alexander Radzishevsky <radzish@gmail.com>
+
+environment:
+  sdk: '>=2.7.0 <3.0.0'
+
+dependencies:
+  rational: ^0.3.8
+
+dev_dependencies:
+  pedantic: ^1.9.0
+  test: ^1.11.1
