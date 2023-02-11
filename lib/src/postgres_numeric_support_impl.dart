@@ -8,7 +8,7 @@ final BigInt bigIntM1 = BigInt.from(-1);
 
 final Rational rational10000 = Rational.fromInt(pow(10, 4) as int);
 
-Rational numericBinaryToRational(Uint8List binary) {
+Rational? numericBinaryToRational(Uint8List? binary) {
   if (binary == null) {
     return null;
   }
@@ -113,7 +113,7 @@ Uint8List rationalToNumericBinary(Rational rational, int scale) {
   List<int> digits = [];
 
   // numerator
-  int numerator = rational.abs().toInt();
+  int numerator = rational.abs().toBigInt().toInt();
 
   int weight = -1;
 
@@ -142,7 +142,7 @@ Uint8List rationalToNumericBinary(Rational rational, int scale) {
     var rationalDenominator = rationalDigit - Rational(rationalDigit.toBigInt());
     rationalDigit = rationalDenominator * rational10000;
 
-    int digit = rationalDigit.toInt();
+    int digit = rationalDigit.toBigInt().toInt();
 
     int byte0 = (digit & 0xFF00) >> 8;
     int byte1 = digit & 0xFF;
@@ -165,7 +165,7 @@ Uint8List rationalToNumericBinary(Rational rational, int scale) {
 
   digits..insert(0, scale)..insert(0, 0);
 
-  digits..insert(0, 0)..insert(0, rational.isNegative ? 0x40 : 0);
+  digits..insert(0, 0)..insert(0, rational.compareTo(Rational.zero) < 0 ? 0x40 : 0);
 
   digits..insert(0, weight)..insert(0, weight > 0 ? 0 : -1);
 
